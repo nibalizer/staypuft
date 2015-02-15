@@ -7,6 +7,9 @@ from actions.zuulstatus import zuulstatus
 commands_available['zuulstatus'] = zuulstatus
 commands_available['zs'] = zuulstatus
 
+from actions.puppettypes import puppet_type_ref
+commands_available['puppet type'] = puppet_type_ref
+
 
 def bothelp(bot, user, channel, msg, config):
     msg = "Use {0}".format(",".join(commands_available.keys()))
