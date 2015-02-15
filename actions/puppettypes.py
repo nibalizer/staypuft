@@ -11,8 +11,12 @@ def puppet_type_ref(bot, user, channel, msg, config):
     print words[3]
     puppet_type = words[3]
     
-    puppet_type_description = r.json()[puppet_type]['description'].replace('\n', ' ').encode('ascii','ignore')
+    puppet_type_description = r.json()[puppet_type]['description'].replace('\n', ' ')[:512].encode('ascii','ignore')
     bot.msg(channel, puppet_type_description)
+    parameters = r.json()[puppet_type]['attributes'].keys()
+    params = [i.encode('ascii', 'ignore') for i in parameters]
+    type_parameters = "Parameters: {0}".format(",".join(params))
+    bot.msg(channel, type_parameters)
 
 
 #mock the bot
@@ -29,6 +33,6 @@ if __name__ == "__main__":
     import sys 
     bot = mybot()
     config = myconfig()
-    puppet_type_ref(bot, 'nibalizer', '#ghostbusters', 'puppettype {0}'.format(sys.argv[1]), config)
+    puppet_type_ref(bot, 'nibalizer', '#ghostbusters', '{0}'.format(sys.argv[1]), config)
 
 
