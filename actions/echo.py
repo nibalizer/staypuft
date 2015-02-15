@@ -1,5 +1,5 @@
 
-def echo(bot, user, channel, msg):
+def echo(bot, user, channel, msg, config):
     bot.msg(channel, msg[5:])
 
 

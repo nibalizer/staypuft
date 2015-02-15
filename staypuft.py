@@ -110,7 +110,7 @@ class LogBot(irc.IRCClient):
         for trigger in [self.nickname, self.handle]:
             if msg.startswith(trigger):
                 msg_stripped = msg[len(trigger):]
-                command_handler.command_handler(self, user, channel, msg_stripped)
+                command_handler.command_handler(self, user, channel, msg_stripped, config)
                 self.logger.log("<%s> %s" % (self.nickname, msg))
                 return
 
