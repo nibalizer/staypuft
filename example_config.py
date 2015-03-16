@@ -8,3 +8,4 @@ channel = '&bitlbee'
 log = 'chatlog'
 postup_messages = ['identify secretpassword']
 additional_channels = ['actualworkchannel']
+respond_pm = False
