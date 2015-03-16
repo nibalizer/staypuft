@@ -98,12 +98,16 @@ class LogBot(irc.IRCClient):
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
         user = user.split('!', 1)[0]
-        self.logger.log("<%s> %s" % (user, msg))
+        self.logger.log("<%s> %s in %s" % (user, msg, channel))
         
         # Check to see if they're sending me a private message
         if channel == self.nickname:
-            msg = "It isn't nice to whisper!  Play nice with the group."
-            self.msg(user, msg)
+            if config.respond_pm:
+                for trigger in [self.nickname, self.handle]:
+                    if msg.startswith(trigger):
+                        msg_stripped = msg[len(trigger):]
+                        command_handler.command_handler(self, user, channel, msg_stripped, config)
+                        self.logger.log("<%s> %s" % (self.nickname, msg))
             return
 
         # Otherwise check to see if it is a message directed at me
