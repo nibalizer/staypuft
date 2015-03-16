@@ -1,3 +1,5 @@
 venv/
 *.pyc
 config.py
+proxy.sh
+chatlog
