@@ -38,6 +38,7 @@ import time, sys
 # staypuft import
 import config
 import command_handler
+import trigger_handler
 
 
 def joinAdditionalChannels(bot):
@@ -98,7 +99,7 @@ class LogBot(irc.IRCClient):
     def privmsg(self, user, channel, msg):
         """This will get called when the bot receives a message."""
         user = user.split('!', 1)[0]
-        self.logger.log("<%s> %s in %s" % (user, msg, channel))
+        self.logger.log("%s:<%s> %s" % (channel, user, msg))
         
         # Check to see if they're sending me a private message
         if channel == self.nickname:
@@ -107,7 +108,6 @@ class LogBot(irc.IRCClient):
                     if msg.startswith(trigger):
                         msg_stripped = msg[len(trigger):]
                         command_handler.command_handler(self, user, channel, msg_stripped, config)
-                        self.logger.log("<%s> %s" % (self.nickname, msg))
             return
 
         # Otherwise check to see if it is a message directed at me
@@ -115,8 +115,10 @@ class LogBot(irc.IRCClient):
             if msg.startswith(trigger):
                 msg_stripped = msg[len(trigger):]
                 command_handler.command_handler(self, user, channel, msg_stripped, config)
-                self.logger.log("<%s> %s" % (self.nickname, msg))
                 return
+
+        # Otherwise check to see if it matches a trigger event
+        trigger_handler.trigger_handler(self, user, channel, msg, config)
 
 
 
