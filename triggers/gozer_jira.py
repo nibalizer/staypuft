@@ -3,7 +3,7 @@
 import re
 
 def search_and_respond(bot, user, channel, msg, config):
-    pattern = re.compile('GOZ-\d+')
+    pattern = re.compile(' GOZ-\d+ ')
     results = pattern.findall(msg)
     bot.logger.log("gerrit_hp {0}".format(results))
     for i in results:

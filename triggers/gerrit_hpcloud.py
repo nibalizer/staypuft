@@ -4,7 +4,7 @@ import re
 
 def search_and_respond(bot, user, channel, msg, config):
     stub = "https://review.hpcloud.net/#/c/57038/"
-    pattern = re.compile('\d\d\d\d\d')
+    pattern = re.compile(' \d\d\d\d\d ')
     results = pattern.findall(msg)
     bot.logger.log("gerrit_hp {0}".format(results))
     for i in results:
